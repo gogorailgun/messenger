@@ -1,13 +1,24 @@
 package mail;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.net.DatagramSocket;
+import java.util.Properties;
+import java.util.Vector;
 
-import mail.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import vo.IdIpVO;
 
 public class Mail {
 	// ip와 id가 같이 담겨있는 Properties
@@ -17,12 +28,15 @@ public class Mail {
 	JFrame fr ;
 	JPanel panIdList , panMsgList, panBtn;
 	JButton btnSend , btnShowMsg , btnClose;
-	JList idList, MsgList;
+	JList idJList, MsgJList;
 	JScrollPane scroll1, scroll2;
 	JLabel lblIdList, lblMsgList;
 	
 	// UDP 통신을 할 DatagramSocket 만들기
 	public DatagramSocket sSocket, rSocket;
+	
+	Vector<IdIpVO> idList;
+	Vector<String> msgList;
 	
 	public Mail() {
 		setUI();
@@ -50,8 +64,8 @@ public class Mail {
 		panBtn.setSize(new Dimension(30,500));
 		
 		// list 추가
-		idList = new JList();
-		MsgList = new JList();
+		idJList = new JList();
+		MsgJList = new JList();
 		
 		// label 추가
 		lblIdList = new JLabel("회원정보");
@@ -59,12 +73,12 @@ public class Mail {
 		lblMsgList = new JLabel("메일함");
 		lblMsgList.setHorizontalAlignment(JLabel.CENTER);
 		
-		idList.setSize(new Dimension(240,230));
-		MsgList.setSize(new Dimension(240,230));
+		idJList.setSize(new Dimension(240,230));
+		MsgJList.setSize(new Dimension(240,230));
 		
-		panIdList.add(idList);
+		panIdList.add(idJList);
 		panIdList.add(lblIdList,BorderLayout.NORTH);
-		panMsgList.add(MsgList);
+		panMsgList.add(MsgJList);
 		panMsgList.add(lblMsgList,BorderLayout.NORTH);
 		
 		// 버튼 추가
