@@ -128,6 +128,7 @@ public class Mail {
 					return;
 				}
 				SendFrame sFr = new SendFrame(Mail.this);
+				
 			}
 		});
 		

@@ -7,6 +7,10 @@ import javax.swing.*;
 import mail.*;
 
 public class SendFrame {
+	BtnEvent evt;
+	
+	public String sid;
+	
 	Mail main;
 	JFrame wFr;
 	JLabel lbl;
@@ -26,28 +30,12 @@ public class SendFrame {
 		
 		
 		
-		// 버튼 추가
-		sendB = new JButton("보내기"); 
-		exitB = new JButton("닫기"); 
 		
-		// 버튼 이벤트 추가
-		sendB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
-		exitB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				wFr.setVisible(false);
-			}
-		});
+		sid = (String) main.idJList.getSelectedValue();
 		
 		// 라벨 필드 추가후 nameP에 추가
 		lbl = new JLabel("받는 사람 : ");
-		field = new JTextField();
+		field = new JTextField(sid);
 		// 고치지 못하게
 		field.setEditable(false);
 		
@@ -56,10 +44,24 @@ public class SendFrame {
 		nameP.add("West",lbl);
 		nameP.add("Center",field);
 		
+		// 버튼 추가
+		sendB = new JButton("보내기"); 
+		exitB = new JButton("닫기"); 
+		
 		btnP = new JPanel(new GridLayout(1,2));
 		btnP.add(sendB);
 		btnP.add(exitB);
 		
+		evt = new BtnEvent(this);
+		// 버튼 이벤트 추가
+		sendB.addActionListener(evt);
+		
+		exitB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				wFr.setVisible(false);
+			}
+		});
 		
 		area = new JTextArea();
 		
