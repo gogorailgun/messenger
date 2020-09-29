@@ -15,10 +15,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import dao.IdIpDAO;
+import mail.thread.MailThread;
 import vo.IdIpVO;
+
 
 public class Mail {
 	// ip와 id가 같이 담겨있는 Properties
@@ -28,18 +32,37 @@ public class Mail {
 	JFrame fr ;
 	JPanel panIdList , panMsgList, panBtn;
 	JButton btnSend , btnShowMsg , btnClose;
-	JList idJList, MsgJList;
 	JScrollPane scroll1, scroll2;
 	JLabel lblIdList, lblMsgList;
+	public JList idJList, msgJList;
+	
+	
+	public Vector<IdIpVO> voList;
+	public Vector<String> idList;
+	public Vector<String> msgList;
 	
 	// UDP 통신을 할 DatagramSocket 만들기
 	public DatagramSocket sSocket, rSocket;
 	
-	Vector<IdIpVO> idList;
-	Vector<String> msgList;
 	
 	public Mail() {
+		setNetwork();
 		setUI();
+	}
+	
+	public void setNetwork() {
+		try {
+			sSocket = new DatagramSocket();
+			rSocket = new DatagramSocket(7799);
+			
+			MailThread mthread = new MailThread(this);
+			mthread.start();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			close();
+			System.exit(0);
+		}
 	}
 	
 	public void setUI() {
@@ -52,6 +75,7 @@ public class Mail {
 			}
 
 		});
+		// Vector 추가
 		
 		// 판넬 추가
 		JPanel pan = new JPanel(new GridLayout(1,2));
@@ -64,8 +88,15 @@ public class Mail {
 		panBtn.setSize(new Dimension(30,500));
 		
 		// list 추가
-		idJList = new JList();
-		MsgJList = new JList();
+		IdIpDAO dao = new IdIpDAO();
+		voList = dao.selectIdList();
+		idList = new Vector<String>();
+		for (IdIpVO vo : voList) {
+			idList.add(vo.getId());
+		}
+		idJList = new JList(idList);
+		msgList = new Vector<String>();
+		msgJList = new JList(msgList);
 		
 		// label 추가
 		lblIdList = new JLabel("회원정보");
@@ -74,11 +105,11 @@ public class Mail {
 		lblMsgList.setHorizontalAlignment(JLabel.CENTER);
 		
 		idJList.setSize(new Dimension(240,230));
-		MsgJList.setSize(new Dimension(240,230));
+		msgJList.setSize(new Dimension(240,230));
 		
 		panIdList.add(idJList);
 		panIdList.add(lblIdList,BorderLayout.NORTH);
-		panMsgList.add(MsgJList);
+		panMsgList.add(msgJList);
 		panMsgList.add(lblMsgList,BorderLayout.NORTH);
 		
 		// 버튼 추가
@@ -90,6 +121,12 @@ public class Mail {
 		btnSend.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String sid = (String) idJList.getSelectedValue();
+				
+				if(sid == null) {
+					JOptionPane.showMessageDialog(null, "*** 아이디를 먼저 선택하세요! ***");
+					return;
+				}
 				SendFrame sFr = new SendFrame(Mail.this);
 			}
 		});
@@ -97,7 +134,15 @@ public class Mail {
 		btnShowMsg.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String sid = (String) msgJList.getSelectedValue();
+				
+				if(sid == null) {
+					JOptionPane.showMessageDialog(null, "*** 아이디를 먼저 선택하세요! ***");
+					return;
+				}
+				
 				ReceiveFrame rFr = new ReceiveFrame(Mail.this);
+				
 			}
 		});
 		
