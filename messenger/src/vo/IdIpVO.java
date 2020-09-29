@@ -20,6 +20,7 @@ public class IdIpVO {
 
 
 	public IdIpVO() {
+
 	}
 
 }

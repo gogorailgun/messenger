@@ -1,12 +1,12 @@
 package dao;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 import vo.IdIpVO;
 
 public interface IdIpDaoInterface {
 	
-	ArrayList<IdIpVO> selectIdList();
+	Vector<IdIpVO> selectIdList();
 	
 	IdIpVO getIdByIp(String ip);
 	
