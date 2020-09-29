@@ -11,4 +11,6 @@ public interface IdIpDaoInterface {
 	IdIpVO getIdByIp(String ip);
 	
 	IdIpVO getIpById(String id);
+	
+	
 }
