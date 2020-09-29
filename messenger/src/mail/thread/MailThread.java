@@ -37,12 +37,14 @@ public class MailThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			byte[] buff = new byte[10240];
-			DatagramPacket pack = new DatagramPacket(buff,10240); 
-			// receive는 블로킹 함수로 실행이 되면 그 다음으로 넘어간다.
-			main.rSocket.receive(pack);
-			// try 안에서 실행
-			receiveProc(pack);
+			while(true) {
+				byte[] buff = new byte[10240];
+				DatagramPacket pack = new DatagramPacket(buff,10240); 
+				// receive는 블로킹 함수로 실행이 되면 그 다음으로 넘어간다.
+				main.rSocket.receive(pack);
+				// try 안에서 실행
+				receiveProc(pack);
+			}
 		} catch(Exception e) {
 		} 
 		
