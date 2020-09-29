@@ -18,9 +18,8 @@ public class IdIpVO {
 		this.ip = ip;
 	}
 
-
 	public IdIpVO() {
-
+		
 	}
 
 }
