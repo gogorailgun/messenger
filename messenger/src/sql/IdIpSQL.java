@@ -32,7 +32,7 @@ public class IdIpSQL {
 			buff.append("FROM ");
 			buff.append("	IPID ");
 			buff.append("ORDER BY ");
-			buff.append("ID ");
+			buff.append("   ID ");
 			break;
 		}
 		
