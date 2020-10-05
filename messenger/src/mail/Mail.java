@@ -128,6 +128,7 @@ public class Mail {
 					return;
 				}
 				SendFrame sFr = new SendFrame(Mail.this);
+				sFr.wFr.setVisible(true);
 				
 			}
 		});
@@ -142,7 +143,8 @@ public class Mail {
 					return;
 				}
 				
-				ReceiveFrame rFr = new ReceiveFrame(Mail.this);
+				ReceiveFrame rFr = new ReceiveFrame(Mail.this, sid);
+				rFr.rFr.setVisible(true);
 				
 			}
 		});

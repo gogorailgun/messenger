@@ -4,7 +4,9 @@ import java.net.*;
 import java.io.*;
 import javax.swing.*;
 
+import dao.IdIpDAO;
 import mail.*;
+import vo.IdIpVO;
 
 public class MailThread extends Thread {
 	Mail main;
@@ -20,14 +22,22 @@ public class MailThread extends Thread {
 		
 		String msg = new String(buff,0,buff.length);
 		String ip = inet.getHostAddress();
-		
+		IdIpDAO dao = new IdIpDAO();
 //		rFr.area = new JTextArea(msg);
-//		String id = dao.selectIdByIp(ip);
+		IdIpVO id = dao.getIdByIp(ip);
 //		rFr.field = new JTextField(id);
 		
-		String id = "euns";
+//		String data = new String(buff);
+//		String id = "";
+//		for (int i = 0; i < buff.length; i++) {
+//			char ch = data.charAt(i);
+//			if (ch == ':') {
+//				break;
+//			}
+//			id += ch;
+//		}
 		
-		main.msgList.add(id + ":" + msg);
+		main.msgList.add(id.getId() + ":" + msg);
 		main.msgJList.setListData(main.msgList);
 		
 		

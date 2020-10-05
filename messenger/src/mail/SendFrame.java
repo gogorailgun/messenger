@@ -72,7 +72,6 @@ public class SendFrame {
 		wFr.add(btnP, BorderLayout.SOUTH);
 		
 		wFr.setSize(new Dimension(250,250));
-		wFr.setVisible(true);
 		wFr.setResizable(false);
 	}
 	

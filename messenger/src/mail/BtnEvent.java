@@ -34,10 +34,11 @@ public class BtnEvent implements ActionListener {
 		// 할일 
 		// 1. 보낼 내용 알아내고
 		String msg = sFr.area.getText();
+		String id = sFr.sid;
+//		msg = id + ":" + msg;
 		byte[] buff = msg.getBytes();
 		// 2. 받는 사람 주소 알아내고
-		String id = sFr.sid;
-		dao.getIpById(id);
+
 		IdIpVO vo = dao.getIpById(id);
 		String ip = vo.getIp();
 		InetAddress inet = null;

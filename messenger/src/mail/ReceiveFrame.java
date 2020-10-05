@@ -14,8 +14,9 @@ public class ReceiveFrame {
 	JButton replyB, exitB;
 	JLabel lbl;
 	JPanel nameP, btnP;
+	String sid;
 	
-	public ReceiveFrame(Mail main) {
+	public ReceiveFrame(Mail main, String sid) {
 		this.main = main;
 		rFr = new JFrame("메일창");
 		rFr.addWindowListener(new WindowAdapter() {
@@ -24,7 +25,8 @@ public class ReceiveFrame {
 			}
 		});
 		// 라벨 필드 추가
-		lbl = new JLabel("보낼 사람 : ");
+		String id = sid.substring(0, sid.indexOf(':'));
+		lbl = new JLabel("보낸 사람 : " + id);
 		field = new JTextField();
 		field.setEditable(false);
 		
@@ -38,7 +40,10 @@ public class ReceiveFrame {
 		replyB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				ReceiveFrame.this.rFr.setVisible(false);
+				SendFrame sFr = new SendFrame(main);
+				sFr.field.setText(id);
+				sFr.wFr.setVisible(true);
 			}
 		});
 		
@@ -57,7 +62,7 @@ public class ReceiveFrame {
 		btnP.add(replyB);
 		btnP.add(exitB);
 		
-		area = new JTextArea();
+		area = new JTextArea(sid.substring(sid.indexOf(':') + 1));
 		area.setEditable(false);
 		
 		rFr.add(nameP,BorderLayout.NORTH);
@@ -70,7 +75,6 @@ public class ReceiveFrame {
 		
 		
 		rFr.setSize(new Dimension(250,250));
-		rFr.setVisible(true);
 		rFr.setResizable(false);
 	}
 

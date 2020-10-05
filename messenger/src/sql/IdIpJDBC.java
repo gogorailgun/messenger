@@ -32,7 +32,7 @@ public class IdIpJDBC {
 	public Connection getCon() {
 		Connection con = null;
 		try {
-			con = DriverManager.getConnection(url, "TEST", "TEST");
+			con = DriverManager.getConnection(url, "test", "test");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
